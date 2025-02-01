@@ -163,7 +163,6 @@
       let recordingInterval;
       let seconds = 0;
       let usingRearCamera = false;
-      let flashActive = false;
 
       async function startCamera(facingMode = "user") {
         if (currentStream) {
@@ -221,28 +220,12 @@
         };
       }
 
-      async function toggleFlash() {
-        if (track && track.getCapabilities().torch) {
-          // Check if the torch capability exists
-          let videoTrack = track; // Assuming `track` is the video track
-          let settings = videoTrack.getSettings();
-
-          // Toggle the flash
-          flashActive = !flashActive;
-          videoTrack
-            .applyConstraints({
-              advanced: [{ torch: flashActive }],
-            })
-            .then(() => {
-              console.log("Flash toggled:", flashActive ? "ON" : "OFF");
-            })
-            .catch((err) => {
-              console.error("Error toggling flash:", err);
-            });
-        } else {
-          console.log("Flash (torch) not supported on this device.");
+      function toggleFlash() {
+            if (track && track.getCapabilities().torch) {
+                let torchState = !track.getSettings().torch;
+                track.applyConstraints({ advanced: [{ torch: torchState }] });
+            }
         }
-      }
 
       function switchCamera() {
         usingRearCamera = !usingRearCamera;
