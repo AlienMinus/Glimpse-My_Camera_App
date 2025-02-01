@@ -2,42 +2,42 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css">
-    <link rel="shortcut icon" href="Camera.png" type="image/png">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="shortcut icon" href="Camera.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rainbow</title>
-    
   </head>
   <body>
-    <h1>Rainbow: My Camera App</h1>
-    <video id="video" autoplay></video>
-    <canvas id="canvas"></canvas>
-    <br />
-    <div class="toolbar">
-      <button onclick="takePhoto()">📸</button>
-      <button onclick="startRecording()">📽️</button>
-      <button onclick="stopRecording()">📼</button>
-      <button onclick="switchCamera()">📱</button>
-      <button onclick="toggleFlash()">⚡</button>
-      <button onclick="toggleInvert()">🛡️</button>
-      <button onclick="toggleMirror()">🪞</button>
-    </div>
-    <div id="recording-time">00:00</div>
-    <div class="zoom-controls">
-      <span>⊖</span>
-      <input
-        type="range"
-        id="zoom"
-        min="1"
-        max="3"
-        step="0.1"
-        value="1"
-        onchange="setZoom(this.value)"
-      />
-      <span>⊕</span>
+    <div class="container">
+      <h1>Rainbow: My Camera App</h1>
+      <video id="video" autoplay></video>
+      <canvas id="canvas"></canvas>
       <br />
+      <div class="toolbar">
+        <button onclick="takePhoto()">📸</button>
+        <button onclick="startRecording()">📽️</button>
+        <button onclick="stopRecording()">📼</button>
+        <button onclick="switchCamera()">📱</button>
+        <button onclick="toggleFlash()">⚡</button>
+        <button onclick="toggleInvert()">🛡️</button>
+        <button onclick="toggleMirror()">🪞</button>
+      </div>
+      <div id="recording-time">00:00</div>
+      <div class="zoom-controls">
+        <span>⊖</span>
+        <input
+          type="range"
+          id="zoom"
+          min="1"
+          max="3"
+          step="0.1"
+          value="1"
+          onchange="setZoom(this.value)"
+        />
+        <span>⊕</span>
+        <br />
+      </div>
     </div>
-
     <script src="script.js"></script>
   </body>
 </html>
