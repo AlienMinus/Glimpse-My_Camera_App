@@ -121,7 +121,7 @@
     </style>
   </head>
   <body>
-    <h1>Rainbow: My Camera App</h1>
+    <h1>Rainbow: My Camera App <a href="test.html">Hi</a> </h1>
     <video id="video" autoplay></video>
     <canvas id="canvas"></canvas>
     <br />
@@ -248,6 +248,13 @@
           .padStart(2, "0");
         let secs = (seconds % 60).toString().padStart(2, "0");
         recordingTime.textContent = `${mins}:${secs}`;
+      }
+
+      function setZoom(value) {
+        if (track && track.getCapabilities().zoom) {
+          let constraints = { advanced: [{ zoom: value }] };
+          track.applyConstraints(constraints);
+        }
       }
 
       startCamera();
