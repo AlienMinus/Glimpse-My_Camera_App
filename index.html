@@ -1,175 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Camera App</title>
     <style>
-        body {
-            text-align: center;
-            font-family: "Poppins", sans-serif;
-            background: linear-gradient(135deg, rgb(180, 8, 8), rgb(0, 0, 0), #8e040d);
-            color: white;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        
-        video {
-            width: 80%;
-            max-width: 600px;
-            border: 10px solid rgb(0, 0, 0);
-            border-radius: 10px;
-            background: white;
-            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.986);
-            transform: scaleX(1);
-            transition: transform 0.3s ease;
-        }
-        
-        canvas {
-            display: none;
-        }
-        
+      html {
+        background: black;
+      }
+      body {
+        text-align: center;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(
+          45deg,
+          rgb(8, 146, 180),
+          rgb(0, 0, 0),
+          #048e5e
+        );
+        color: white;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      video {
+        width: 90%;
+        max-width: 700px;
+        border: 5px solid rgb(0, 204, 255);
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0 5px 20px rgba(0, 208, 255, 0.986);
+        transition: transform 0.3s ease;
+      }
+
+      canvas {
+        display: none;
+      }
+
+      .toolbar {
+        background: rgba(255, 255, 255, 0.153);
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: 0 0 30px rgba(0, 255, 234, 0.99);
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        border: 2px solid white;
+      }
+
+      .toolbar button {
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        background: transparent;
+        color: rgb(255, 255, 255);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        border: 2px solid rgb(255, 255, 255);
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toolbar button:hover {
+        box-shadow: 0 0 20px rgb(255, 255, 255);
+        transform: scale(1.1);
+      }
+
+      .zoom-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: auto;
+      }
+
+      .zoom-controls span {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      #zoom {
+        width: 200px;
+        cursor: pointer;
+      }
+
+      #recording-time {
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: yellow;
+      }
+
+      @media (max-width: 768px) {
         .toolbar {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.695);
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            border: 1px solid white;
+          gap: 10px;
+          padding: 10px;
         }
-        
         .toolbar button {
-            cursor: pointer;
-            border-radius: 9px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: blue;
-            color: rgb(255, 255, 255);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.436);
-            padding: 10px 20px;
+          font-size: 16px;
+          padding: 10px;
         }
-        
-        .toolbar button:hover {
-            box-shadow: 0 0 20px rgb(255, 255, 255);
-            transform: scale(1.05);
-        }
-        
-        .zoom-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
         .zoom-controls span {
-            font-size: 24px;
-            font-weight: bold;
+          font-size: 20px;
         }
-        
         #zoom {
-            width: 150px;
-            cursor: pointer;
+          width: 150px;
         }
-        
-        @media (max-width: 768px) {
-            .toolbar button {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-        }
+      }
+
+      h1 {
+        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+      }
     </style>
-</head>
-<body>
-    <h1>Camera App</h1>
+  </head>
+  <body>
+    <h1>Rainbow: My Camera App</h1>
     <video id="video" autoplay></video>
     <canvas id="canvas"></canvas>
+    <br />
     <div class="toolbar">
-        <button onclick="takePhoto()">Capture</button>
-        <button onclick="switchCamera()">Switch Camera</button>
-        <button onclick="toggleFlash()">Toggle Flash</button>
-        <button onclick="toggleInvert()">Invert Colors</button>
-        <button onclick="toggleMirror()">Mirror</button>
+      <button onclick="takePhoto()">📸</button>
+      <button onclick="startRecording()">📽️</button>
+      <button onclick="stopRecording()">📼</button>
+      <button onclick="switchCamera()">📱</button>
+      <button onclick="toggleFlash()">⚡</button>
+      <button onclick="toggleInvert()">🛡️</button>
+      <button onclick="toggleMirror()">🪞</button>
     </div>
+    <div id="recording-time">00:00</div>
     <div class="zoom-controls">
-        <span>-</span>
-        <input type="range" id="zoom" min="1" max="3" step="0.1" value="1" onchange="setZoom(this.value)">
-        <span>+</span>
+      <span>⊖</span>
+      <input
+        type="range"
+        id="zoom"
+        min="1"
+        max="3"
+        step="0.1"
+        value="1"
+        onchange="setZoom(this.value)"
+      />
+      <span>⊕</span>
+      <br />
     </div>
+
     <script>
-        let video = document.getElementById('video');
-        let canvas = document.getElementById('canvas');
-        let ctx = canvas.getContext('2d');
-        let currentStream = null;
-        let usingRearCamera = false;
-        let track = null;
-        let isMirrored = false;
+      let video = document.getElementById("video");
+      let canvas = document.getElementById("canvas");
+      let ctx = canvas.getContext("2d");
+      let currentStream = null;
+      let track = null;
+      let isMirrored = false;
+      let mediaRecorder;
+      let recordedChunks = [];
+      let recordingTime = document.getElementById("recording-time");
+      let recordingInterval;
+      let seconds = 0;
 
-        async function startCamera(facingMode = 'user') {
-            if (currentStream) {
-                currentStream.getTracks().forEach(track => track.stop());
-            }
-            try {
-                let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode } });
-                currentStream = stream;
-                video.srcObject = stream;
-                track = stream.getVideoTracks()[0];
-            } catch (err) { console.error('Error accessing camera:', err); }
+      async function startCamera(facingMode = "user") {
+        if (currentStream) {
+          currentStream.getTracks().forEach((track) => track.stop());
         }
-
-        function takePhoto() {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            ctx.save();
-            if (isMirrored) {
-                ctx.translate(canvas.width, 0);
-                ctx.scale(-1, 1);
-            }
-            ctx.drawImage(video, 0, 0);
-            ctx.restore();
-            let link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = 'photo.png';
-            link.click();
+        try {
+          let stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode },
+          });
+          currentStream = stream;
+          video.srcObject = stream;
+          track = stream.getVideoTracks()[0];
+        } catch (err) {
+          console.error("Error accessing camera:", err);
         }
+      }
 
-        function switchCamera() {
-            usingRearCamera = !usingRearCamera;
-            startCamera(usingRearCamera ? 'environment' : 'user');
+      function takePhoto() {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.save();
+        if (isMirrored) {
+          ctx.translate(canvas.width, 0);
+          ctx.scale(-1, 1);
         }
+        ctx.drawImage(video, 0, 0);
+        ctx.restore();
+        let link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "photo.png";
+        link.click();
+      }
 
-        function toggleInvert() {
-            video.style.filter = video.style.filter ? '' : 'invert(100%)';
-        }
+      function startRecording() {
+        recordedChunks = [];
+        mediaRecorder = new MediaRecorder(currentStream);
+        mediaRecorder.ondataavailable = (event) =>
+          recordedChunks.push(event.data);
+        mediaRecorder.start();
+        seconds = 0;
+        recordingInterval = setInterval(updateRecordingTime, 1000);
+      }
 
-        function setZoom(value) {
-            if (track && track.getCapabilities().zoom) {
-                let constraints = { advanced: [{ zoom: value }] };
-                track.applyConstraints(constraints);
-            }
-        }
+      function stopRecording() {
+        mediaRecorder.stop();
+        clearInterval(recordingInterval);
+        recordingTime.textContent = "00:00";
+        mediaRecorder.onstop = () => {
+          let blob = new Blob(recordedChunks, { type: "video/webm" });
+          let url = URL.createObjectURL(blob);
+          let a = document.createElement("a");
+          a.href = url;
+          a.download = "video.webm";
+          a.click();
+        };
+      }
 
-        function toggleFlash() {
-            if (track && track.getCapabilities().torch) {
-                let torchState = !track.getSettings().torch;
-                track.applyConstraints({ advanced: [{ torch: torchState }] });
-            }
-        }
+      function switchCamera() {
+        usingRearCamera = !usingRearCamera;
+        startCamera(usingRearCamera ? "environment" : "user");
+      }
 
-        function toggleMirror() {
-            isMirrored = !isMirrored;
-            video.style.transform = isMirrored ? 'scaleX(-1)' : 'scaleX(1)';
-        }
+      function toggleInvert() {
+        video.style.filter = video.style.filter ? "" : "invert(100%)";
+      }
 
-        startCamera();
+      function toggleMirror() {
+        isMirrored = !isMirrored;
+        video.style.transform = isMirrored ? "scaleX(-1)" : "scaleX(1)";
+      }
+
+      function updateRecordingTime() {
+        seconds++;
+        let mins = Math.floor(seconds / 60)
+          .toString()
+          .padStart(2, "0");
+        let secs = (seconds % 60).toString().padStart(2, "0");
+        recordingTime.textContent = `${mins}:${secs}`;
+      }
+
+      startCamera();
     </script>
-</body>
+  </body>
 </html>
