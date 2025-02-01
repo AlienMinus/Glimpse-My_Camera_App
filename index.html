@@ -26,6 +26,8 @@
             border-radius: 10px;
             background: white;
             box-shadow: 0 5px 20px rgba(255, 255, 255, 0.986);
+            transform: scaleX(1);
+            transition: transform 0.3s ease;
         }
         
         canvas {
@@ -95,6 +97,7 @@
         <button onclick="switchCamera()">Switch Camera</button>
         <button onclick="toggleFlash()">Toggle Flash</button>
         <button onclick="toggleInvert()">Invert Colors</button>
+        <button onclick="toggleMirror()">Mirror</button>
     </div>
     <div class="zoom-controls">
         <span>-</span>
@@ -108,6 +111,7 @@
         let currentStream = null;
         let usingRearCamera = false;
         let track = null;
+        let isMirrored = false;
 
         async function startCamera(facingMode = 'user') {
             if (currentStream) {
@@ -124,7 +128,13 @@
         function takePhoto() {
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
+            ctx.save();
+            if (isMirrored) {
+                ctx.translate(canvas.width, 0);
+                ctx.scale(-1, 1);
+            }
             ctx.drawImage(video, 0, 0);
+            ctx.restore();
             let link = document.createElement('a');
             link.href = canvas.toDataURL('image/png');
             link.download = 'photo.png';
@@ -152,6 +162,11 @@
                 let torchState = !track.getSettings().torch;
                 track.applyConstraints({ advanced: [{ torch: torchState }] });
             }
+        }
+
+        function toggleMirror() {
+            isMirrored = !isMirrored;
+            video.style.transform = isMirrored ? 'scaleX(-1)' : 'scaleX(1)';
         }
 
         startCamera();
