@@ -1,7 +1,7 @@
 html {
   background: black;
-  padding: auto;
-  margin: auto;
+  padding: 0px;
+  margin: 0px;
 }
 body {
   text-align: center;
@@ -111,4 +111,8 @@ h1 {
 
 footer a{
   color: rgba(255, 255, 255, 0.773);
+}
+.container{
+  padding: 20px;
+  margin: 20px;
 }
