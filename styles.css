@@ -108,3 +108,7 @@ canvas {
 h1 {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
+
+footer a{
+  color: rgba(255, 255, 255, 0.773);
+}
